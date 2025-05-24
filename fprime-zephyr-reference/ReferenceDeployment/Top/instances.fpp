@@ -6,7 +6,7 @@ module ReferenceDeployment {
 
   module Default {
     constant QUEUE_SIZE = 10
-    constant STACK_SIZE = 64 * 1024
+    constant STACK_SIZE = 10 * 1024
   }
 
   # ----------------------------------------------------------------------
@@ -23,12 +23,7 @@ module ReferenceDeployment {
     stack size Default.STACK_SIZE \
     priority 120
 
-  instance rateGroup2: Svc.ActiveRateGroup base id 0x0300 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 119
-
-  instance rateGroup3: Svc.ActiveRateGroup base id 0x0400 \
+  instance rateGroup2: Svc.ActiveRateGroup base id 0x0400 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 118
@@ -38,30 +33,10 @@ module ReferenceDeployment {
     stack size Default.STACK_SIZE \
     priority 101
 
-  instance cmdSeq: Svc.CmdSequencer base id 0x0600 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 100
-
   instance comQueue: Svc.ComQueue base id 0x0700 \
       queue size 50 \
       stack size Default.STACK_SIZE \
       priority 100 \
-
-  instance fileDownlink: Svc.FileDownlink base id 0x0800 \
-    queue size 30 \
-    stack size Default.STACK_SIZE \
-    priority 100
-
-  instance fileManager: Svc.FileManager base id 0x0900 \
-    queue size 30 \
-    stack size Default.STACK_SIZE \
-    priority 100
-
-  instance fileUplink: Svc.FileUplink base id 0x0A00 \
-    queue size 30 \
-    stack size Default.STACK_SIZE \
-    priority 100
 
   instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
     queue size Default.QUEUE_SIZE \
@@ -72,20 +47,15 @@ module ReferenceDeployment {
   # depending on which form of telemetry downlink
   # you wish to use
 
-  instance tlmSend: Svc.TlmChan base id 0x0C00 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 97
+  #instance tlmSend: Svc.TlmChan base id 0x0C00 \
+  #  queue size Default.QUEUE_SIZE \
+  #  stack size Default.STACK_SIZE \
+  #  priority 97
 
   #instance tlmSend: Svc.TlmPacketizer base id 0x0C00 \
   #    queue size Default.QUEUE_SIZE \
   #    stack size Default.STACK_SIZE \
   #    priority 97
-
-  instance prmDb: Svc.PrmDb base id 0x0D00 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 96
 
   # ----------------------------------------------------------------------
   # Queued component instances
@@ -98,8 +68,6 @@ module ReferenceDeployment {
   # Passive component instances
   # ----------------------------------------------------------------------
 
-  @ Communications driver. May be swapped with other com drivers like UART or TCP
-  instance comDriver: Drv.LinuxUartDriver base id 0x4000
 
   instance framer: Svc.FprimeFramer base id 0x4100
 

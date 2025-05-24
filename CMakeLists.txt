@@ -4,6 +4,8 @@
 ####
 
 cmake_minimum_required(VERSION 3.24.2)
+
+find_package(Zephyr)
 project(fprime-zephyr-reference C CXX)
 
 ###

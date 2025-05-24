@@ -4,19 +4,9 @@ telemetry packets ReferenceDeploymentPackets {
     ReferenceDeployment.cmdDisp.CommandsDispatched
     ReferenceDeployment.rateGroup1.RgMaxTime
     ReferenceDeployment.rateGroup2.RgMaxTime
-    ReferenceDeployment.rateGroup3.RgMaxTime
-    ReferenceDeployment.cmdSeq.CS_LoadCommands
-    ReferenceDeployment.cmdSeq.CS_CancelCommands
-    ReferenceDeployment.cmdSeq.CS_CommandsExecuted
-    ReferenceDeployment.cmdSeq.CS_SequencesCompleted
-    ReferenceDeployment.fileUplink.FilesReceived
-    ReferenceDeployment.fileUplink.PacketsReceived
     ReferenceDeployment.bufferManager.TotalBuffs
     ReferenceDeployment.bufferManager.CurrBuffs
     ReferenceDeployment.bufferManager.HiBuffs
-    ReferenceDeployment.fileDownlink.FilesSent
-    ReferenceDeployment.fileDownlink.PacketsSent
-    ReferenceDeployment.fileManager.CommandsExecuted
     ReferenceDeployment.comQueue.comQueueDepth
     ReferenceDeployment.comQueue.buffQueueDepth
     # Note: Uncomment when using Svc:TlmPacketizer
@@ -26,15 +16,9 @@ telemetry packets ReferenceDeploymentPackets {
   packet CDHErrors id 2 group 1 {
     ReferenceDeployment.rateGroup1.RgCycleSlips
     ReferenceDeployment.rateGroup2.RgCycleSlips
-    ReferenceDeployment.rateGroup3.RgCycleSlips
-    ReferenceDeployment.cmdSeq.CS_Errors
-    ReferenceDeployment.fileUplink.Warnings
-    ReferenceDeployment.fileDownlink.Warnings
     ReferenceDeployment.$health.PingLateWarnings
-    ReferenceDeployment.fileManager.Errors
     ReferenceDeployment.bufferManager.NoBuffs
     ReferenceDeployment.bufferManager.EmptyBuffs
-    ReferenceDeployment.fileManager.Errors
   }
 
   packet DriveTlm id 3 group 1 {
@@ -140,6 +124,6 @@ telemetry packets ReferenceDeploymentPackets {
 
 } omit {
   ReferenceDeployment.cmdDisp.CommandErrors
-  ReferenceDeployment.comDriver.BytesRecv
-  ReferenceDeployment.comDriver.BytesSent
+#  ReferenceDeployment.comDriver.BytesRecv
+#  ReferenceDeployment.comDriver.BytesSent
 }

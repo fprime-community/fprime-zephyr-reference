@@ -11,6 +11,8 @@
 #include "fprime-zephyr-reference/ReferenceDeployment/Top/FppConstantsAc.hpp"
 #include "Svc/FramingProtocol/FprimeProtocol.hpp"
 #include "Svc/Health/Health.hpp"
+#include <zephyr/drivers/uart.h>
+
 
 // Definitions are placed within a namespace named after the deployment
 namespace ReferenceDeployment {
@@ -23,7 +25,7 @@ namespace ReferenceDeployment {
  * to the definition of the project. Here, they are derived from command line inputs.
  */
 struct TopologyState {
-    const CHAR* uartDevice;
+    const device* uartDevice;
     U32 baudRate;
 };
 
@@ -56,31 +58,13 @@ enum { WARN = 3, FATAL = 5 };
 namespace ReferenceDeployment_cmdDisp {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace ReferenceDeployment_cmdSeq {
-enum { WARN = 3, FATAL = 5 };
-}
 namespace ReferenceDeployment_eventLogger {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_fileDownlink {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_fileManager {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_fileUplink {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_prmDb {
 enum { WARN = 3, FATAL = 5 };
 }
 namespace ReferenceDeployment_rateGroup1 {
 enum { WARN = 3, FATAL = 5 };
 }
 namespace ReferenceDeployment_rateGroup2 {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_rateGroup3 {
 enum { WARN = 3, FATAL = 5 };
 }
 }  // namespace PingEntries

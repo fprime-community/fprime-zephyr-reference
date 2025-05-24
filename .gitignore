@@ -7,6 +7,9 @@ build-fprime-*
 *.template.cpp
 *.template.hpp
 
+# Zephyr workspace
+lib/zephyr-workspace/*
+
 # Misc
 /venv/
 /fprime-venv/

@@ -13,9 +13,7 @@ module ReferenceDeployment {
     EVENTS,
     TELEMETRY
   }
-  enum Ports_ComBufferQueue {
-    FILE_DOWNLINK
-  }
+
 
   topology ReferenceDeployment {
 
@@ -25,9 +23,8 @@ module ReferenceDeployment {
 
     instance $health
     instance blockDrv
-    instance tlmSend
+    #instance tlmSend
     instance cmdDisp
-    instance cmdSeq
     instance comDriver
     instance comQueue
     instance comStub
@@ -37,16 +34,11 @@ module ReferenceDeployment {
     instance eventLogger
     instance fatalAdapter
     instance fatalHandler
-    instance fileDownlink
-    instance fileManager
-    instance fileUplink
     instance bufferManager
     instance framer
     instance chronoTime
-    instance prmDb
     instance rateGroup1
     instance rateGroup2
-    instance rateGroup3
     instance rateGroupDriver
     instance textLogger
     instance systemResources
@@ -60,9 +52,7 @@ module ReferenceDeployment {
 
     event connections instance eventLogger
 
-    param connections instance prmDb
-
-    telemetry connections instance tlmSend
+    #telemetry connections instance tlmSend
 
     text event connections instance textLogger
 
@@ -82,11 +72,9 @@ module ReferenceDeployment {
     # ----------------------------------------------------------------------
 
     connections Downlink {
-      # Inputs to ComQueue (events, telemetry, file)
+      # Inputs to ComQueue (events, telemetry)
       eventLogger.PktSend         -> comQueue.comPacketQueueIn[Ports_ComPacketQueue.EVENTS]
-      tlmSend.PktSend             -> comQueue.comPacketQueueIn[Ports_ComPacketQueue.TELEMETRY]
-      fileDownlink.bufferSendOut  -> comQueue.bufferQueueIn[Ports_ComBufferQueue.FILE_DOWNLINK]
-      comQueue.bufferReturnOut[Ports_ComBufferQueue.FILE_DOWNLINK] -> fileDownlink.bufferReturn
+      #tlmSend.PktSend             -> comQueue.comPacketQueueIn[Ports_ComPacketQueue.TELEMETRY]
 
       # ComQueue <-> Framer
       comQueue.dataOut   -> framer.dataIn
@@ -118,25 +106,15 @@ module ReferenceDeployment {
 
       # Rate group 1
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
-      rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[1] -> fileDownlink.Run
-      rateGroup1.RateGroupMemberOut[2] -> systemResources.run
-      rateGroup1.RateGroupMemberOut[3] -> comQueue.run
+      #rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
+      rateGroup1.RateGroupMemberOut[1] -> systemResources.run
+      rateGroup1.RateGroupMemberOut[2] -> comQueue.run
 
       # Rate group 2
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
-      rateGroup2.RateGroupMemberOut[0] -> cmdSeq.schedIn
-
-      # Rate group 3
-      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3.CycleIn
-      rateGroup3.RateGroupMemberOut[0] -> $health.Run
-      rateGroup3.RateGroupMemberOut[1] -> blockDrv.Sched
-      rateGroup3.RateGroupMemberOut[2] -> bufferManager.schedIn
-    }
-
-    connections Sequencer {
-      cmdSeq.comCmdOut -> cmdDisp.seqCmdBuff
-      cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
+      rateGroup2.RateGroupMemberOut[0] -> $health.Run
+      rateGroup2.RateGroupMemberOut[1] -> blockDrv.Sched
+      rateGroup2.RateGroupMemberOut[2] -> bufferManager.schedIn
     }
 
     connections Uplink {
@@ -161,11 +139,9 @@ module ReferenceDeployment {
       # Router buffer allocations
       fprimeRouter.bufferAllocate   -> bufferManager.bufferGetCallee
       fprimeRouter.bufferDeallocate -> bufferManager.bufferSendIn
-      # Router <-> CmdDispatcher/FileUplink
+      # Router <-> CmdDispatcher
       fprimeRouter.commandOut  -> cmdDisp.seqCmdBuff
       cmdDisp.seqCmdStatus     -> fprimeRouter.cmdResponseIn
-      fprimeRouter.fileOut     -> fileUplink.bufferSendIn
-      fileUplink.bufferSendOut -> fprimeRouter.fileBufferReturnIn
     }
 
     connections ReferenceDeployment {

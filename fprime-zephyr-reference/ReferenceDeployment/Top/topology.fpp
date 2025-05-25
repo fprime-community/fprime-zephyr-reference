@@ -22,7 +22,7 @@ module ReferenceDeployment {
     # ----------------------------------------------------------------------
 
     instance $health
-    instance blockDrv
+    instance clockSource
     #instance tlmSend
     instance cmdDisp
     instance comDriver
@@ -32,7 +32,7 @@ module ReferenceDeployment {
     instance deframer
     instance frameAccumulator
     instance eventLogger
-    instance fatalAdapter
+    #instance fatalAdapter
     instance fatalHandler
     instance bufferManager
     instance framer
@@ -102,19 +102,20 @@ module ReferenceDeployment {
 
     connections RateGroups {
       # Block driver
-      blockDrv.CycleOut -> rateGroupDriver.CycleIn
+      clockSource.CycleOut -> rateGroupDriver.CycleIn
 
       # Rate group 1
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
-      #rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[1] -> systemResources.run
-      rateGroup1.RateGroupMemberOut[2] -> comQueue.run
+      rateGroup1.RateGroupMemberOut[0] -> comDriver.schedIn
+      #rateGroup1.RateGroupMemberOut[2] -> tlmSend.Run
 
       # Rate group 2
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
       rateGroup2.RateGroupMemberOut[0] -> $health.Run
-      rateGroup2.RateGroupMemberOut[1] -> blockDrv.Sched
-      rateGroup2.RateGroupMemberOut[2] -> bufferManager.schedIn
+#      rateGroup2.RateGroupMemberOut[1] -> blockDrv.Sched
+#      rateGroup2.RateGroupMemberOut[2] -> bufferManager.schedIn
+#      rateGroup2.RateGroupMemberOut[3] -> systemResources.run
+#      rateGroup1.RateGroupMemberOut[0] -> comQueue.run
     }
 
     connections Uplink {

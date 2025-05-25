@@ -22,7 +22,6 @@ telemetry packets ReferenceDeploymentPackets {
   }
 
   packet DriveTlm id 3 group 1 {
-    ReferenceDeployment.blockDrv.BD_Cycles
   }
 
   packet SystemRes1 id 4 group 2 {

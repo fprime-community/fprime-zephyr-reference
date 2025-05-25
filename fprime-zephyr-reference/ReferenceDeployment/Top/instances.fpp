@@ -6,42 +6,37 @@ module ReferenceDeployment {
 
   module Default {
     constant QUEUE_SIZE = 10
-    constant STACK_SIZE = 10 * 1024
+    constant STACK_SIZE = 8 * 1024
   }
 
   # ----------------------------------------------------------------------
   # Active component instances
   # ----------------------------------------------------------------------
 
-  instance blockDrv: Drv.BlockDriver base id 0x0100 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 140
-
   instance rateGroup1: Svc.ActiveRateGroup base id 0x0200 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 120
+    priority 13
 
   instance rateGroup2: Svc.ActiveRateGroup base id 0x0400 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 118
+    priority 12
 
   instance cmdDisp: Svc.CommandDispatcher base id 0x0500 \
     queue size 20 \
     stack size Default.STACK_SIZE \
-    priority 101
+    priority 11
 
   instance comQueue: Svc.ComQueue base id 0x0700 \
       queue size 50 \
       stack size Default.STACK_SIZE \
-      priority 100 \
+      priority 10 \
 
   instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 98
+    priority 9
 
   # comment in Svc.TlmChan or Svc.TlmPacketizer
   # depending on which form of telemetry downlink
@@ -68,10 +63,12 @@ module ReferenceDeployment {
   # Passive component instances
   # ----------------------------------------------------------------------
 
+  instance clockSource: Zephyr.ZephyrRateDriver base id 0x4000
+
 
   instance framer: Svc.FprimeFramer base id 0x4100
 
-  instance fatalAdapter: Svc.AssertFatalAdapter base id 0x4200
+  #instance fatalAdapter: Svc.AssertFatalAdapter base id 0x4200
 
   instance fatalHandler: Svc.FatalHandler base id 0x4300
 

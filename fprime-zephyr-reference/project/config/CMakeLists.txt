@@ -8,5 +8,6 @@ register_fprime_config(
         "${CMAKE_CURRENT_LIST_DIR}/AcConstants.fpp"
         "${CMAKE_CURRENT_LIST_DIR}/CommandDispatcherImplCfg.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/TlmChanImplCfg.hpp"
+        "${CMAKE_CURRENT_LIST_DIR}/FpConfig.h"
     INTERFACE
 )

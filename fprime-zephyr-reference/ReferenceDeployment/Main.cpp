@@ -8,6 +8,8 @@
 #include <fprime-zephyr-reference/ReferenceDeployment/Top/ReferenceDeploymentTopologyAc.hpp>
 // OSAL initialization
 #include <Os/Os.hpp>
+#include <Fw/Logger/Logger.hpp>
+#include <Fw/Types/Assert.hpp>
 
 const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(cdc_acm_uart0));
 /**
@@ -27,15 +29,14 @@ int main(int argc, char* argv[]) {
     inputs.baudRate = 115200;
     inputs.uartDevice = serial;
 
+
     // Setup, cycle, and teardown topology
+    Fw::Logger::log("[F Prime] Initializing topology\n");
     ReferenceDeployment::setupTopology(inputs);
-    // Tick the rategroups
-    // TODO: can this improve
-    while(true)
-    {
-        Os::RawTime time;
-        ReferenceDeployment::rateGroupDriver.get_CycleIn_InputPort(0)->invoke(time);
-        k_usleep(1);
+    Fw::Logger::log("[F Prime] Entering main loop\n");
+    while (true) {
+        // This cycles the rate group by spinning on a timer
+        ReferenceDeployment::clockSource.cycle();
     }
     return 0;
 }

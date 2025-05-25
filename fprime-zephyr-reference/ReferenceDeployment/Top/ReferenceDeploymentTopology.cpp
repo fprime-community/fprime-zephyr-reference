@@ -28,8 +28,8 @@ Svc::FrameDetectors::FprimeFrameDetector frameDetector;
 
 Svc::ComQueue::QueueConfigurationTable configurationTable;
 
-// The reference topology divides the incoming clock signal (1KHz) into sub-signals: 10Hz, and 1Hz
-Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{100, 0}, {1000, 0}}};
+// The reference topology divides the incoming clock signal (10Hz) into sub-signals: 10Hz, and 1Hz
+Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{10, 0}, {100, 0}}};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
@@ -42,22 +42,12 @@ enum TopologyConstants {
     COMM_PRIORITY = 100,
     // bufferManager constants
     FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE) + Svc::FprimeProtocol::FrameHeader::SERIALIZED_SIZE + Svc::FprimeProtocol::FrameTrailer::SERIALIZED_SIZE,
-    FRAMER_BUFFER_COUNT = 30,
+    FRAMER_BUFFER_COUNT = 1, // ComQ/Com protocol
     DEFRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE),
-    DEFRAMER_BUFFER_COUNT = 30,
-    COM_DRIVER_BUFFER_SIZE = 3000,
-    COM_DRIVER_BUFFER_COUNT = 30,
+    DEFRAMER_BUFFER_COUNT = 5,
+    COM_DRIVER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE) + Svc::FprimeProtocol::FrameHeader::SERIALIZED_SIZE + Svc::FprimeProtocol::FrameTrailer::SERIALIZED_SIZE,
+    COM_DRIVER_BUFFER_COUNT = 5,
     BUFFER_MANAGER_ID = 200
-};
-
-// Ping entries are autocoded, however; this code is not properly exported. Thus, it is copied here.
-Svc::Health::PingEntry pingEntries[] = {
-    {PingEntries::ReferenceDeployment_blockDrv::WARN, PingEntries::ReferenceDeployment_blockDrv::FATAL, "blockDrv"},
-    {PingEntries::ReferenceDeployment_tlmSend::WARN, PingEntries::ReferenceDeployment_tlmSend::FATAL, "chanTlm"},
-    {PingEntries::ReferenceDeployment_cmdDisp::WARN, PingEntries::ReferenceDeployment_cmdDisp::FATAL, "cmdDisp"},
-    {PingEntries::ReferenceDeployment_eventLogger::WARN, PingEntries::ReferenceDeployment_eventLogger::FATAL, "eventLogger"},
-    {PingEntries::ReferenceDeployment_rateGroup1::WARN, PingEntries::ReferenceDeployment_rateGroup1::FATAL, "rateGroup1"},
-    {PingEntries::ReferenceDeployment_rateGroup2::WARN, PingEntries::ReferenceDeployment_rateGroup2::FATAL, "rateGroup2"},
 };
 
 /**
@@ -82,6 +72,7 @@ void configureTopology(const TopologyState& state) {
     // Frame accumulator needs to be passed a frame detector (default F Prime frame detector)
     frameAccumulator.configure(frameDetector, 1, mallocator, 2048);
 
+
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
 
@@ -90,23 +81,25 @@ void configureTopology(const TopologyState& state) {
     rateGroup2.configure(rateGroup2Context, FW_NUM_ARRAY_ELEMENTS(rateGroup2Context));
 
     // Health is supplied a set of ping entires.
-    health.setPingEntries(pingEntries, FW_NUM_ARRAY_ELEMENTS(pingEntries), HEALTH_WATCHDOG_CODE);
+    health.setPingEntries(ConfigObjects::ReferenceDeployment_health::pingEntries,
+                          ConfigObjects::ReferenceDeployment_health::NUM_PING_ENTRIES, HEALTH_WATCHDOG_CODE);
 
     // Note: Uncomment when using Svc:TlmPacketizer
     // tlmSend.setPacketList(ReferenceDeploymentPacketsPkts, ReferenceDeploymentPacketsIgnore, 1);
 
     // ComQueue configuration
     // Events (highest-priority)
-    configurationTable.entries[Ports_ComPacketQueue::EVENTS].depth = 100;
+    configurationTable.entries[Ports_ComPacketQueue::EVENTS].depth = 5;
     configurationTable.entries[Ports_ComPacketQueue::EVENTS].priority = 0;
     // Telemetry
-    configurationTable.entries[Ports_ComPacketQueue::TELEMETRY].depth = 500;
+    configurationTable.entries[Ports_ComPacketQueue::TELEMETRY].depth = 5;
     configurationTable.entries[Ports_ComPacketQueue::TELEMETRY].priority = 2;
     // File Downlink (first entry after the ComPacket queues = NUM_CONSTANTS)
-    configurationTable.entries[Ports_ComPacketQueue::NUM_CONSTANTS].depth = 100;
+    configurationTable.entries[Ports_ComPacketQueue::NUM_CONSTANTS].depth = 1;
     configurationTable.entries[Ports_ComPacketQueue::NUM_CONSTANTS].priority = 1;
     // Allocation identifier is 0 as the MallocAllocator discards it
     comQueue.configure(configurationTable, 0, mallocator);
+    clockSource.configure(10); // 100 Hz core clock
 }
 
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment
@@ -128,17 +121,16 @@ void setupTopology(const TopologyState& state) {
     loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
-    if (state.uartDevice != nullptr) {
-        // Uplink is configured for receive so a socket task is started
-        comDriver.configure(state.uartDevice, state.baudRate);
-    }
+    // Uplink is configured for receive so a socket task is started
+    comDriver.configure(state.uartDevice, state.baudRate);
+    // Start rate groups
+    clockSource.start();
 }
 
 void teardownTopology(const TopologyState& state) {
     // Autocoded (active component) task clean-up. Functions provided by topology autocoder.
     stopTasks(state);
     freeThreads(state);
-
     bufferManager.cleanup();
 }
 };  // namespace ReferenceDeployment

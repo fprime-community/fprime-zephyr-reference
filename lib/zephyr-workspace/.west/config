@@ -1,0 +1,8 @@
+[zephyr]
+base = zephyr
+
+[manifest]
+path = zephyr
+group-filter = -hal,-debug
+project-filter = +hal_nxp
+

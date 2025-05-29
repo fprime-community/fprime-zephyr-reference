@@ -17,3 +17,8 @@ lib/zephyr-workspace/*
 /.vscode/
 .DS_Store
 *.gcov
+build
+
+**/__pycache__/
+**/*.egg-info/
+

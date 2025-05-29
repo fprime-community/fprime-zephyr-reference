@@ -34,9 +34,23 @@ int main(int argc, char* argv[]) {
     Fw::Logger::log("[F Prime] Initializing topology\n");
     ReferenceDeployment::setupTopology(inputs);
     Fw::Logger::log("[F Prime] Entering main loop\n");
+
+    // Main program loop
     while (true) {
         // This cycles the rate group by spinning on a timer
         ReferenceDeployment::clockSource.cycle();
+        // This section will force teensy specific boards into the programing bootloader after the specified number of
+        // cycles. This will ensure that CI programs will always return to a programable state.
+        #if defined(FPRIME_CI_FAILSAFE_CYCLE_COUNT)
+            static U64 failsafe_count = 0;
+            if (FPRIME_CI_FAILSAFE_CYCLE_COUNT <= failsafe_count) {
+                // Magic bootloader breakpoint, provided by PRJC
+                asm("bkpt #251");
+                while(1) {}
+            }
+            failsafe_count = failsafe_count + 1;
+        #endif
     }
+    Fw::Logger::log("[F Prime] Resetting main loop\n");
     return 0;
 }

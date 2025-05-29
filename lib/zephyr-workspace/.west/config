@@ -4,5 +4,5 @@ base = zephyr
 [manifest]
 path = zephyr
 group-filter = -hal,-debug
-project-filter = +hal_nxp
+project-filter = +hal_nxp,-nrf_hw_models,+cmsis,+cmsis_6
 

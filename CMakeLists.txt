@@ -8,6 +8,13 @@ cmake_minimum_required(VERSION 3.24.2)
 find_package(Zephyr)
 project(fprime-zephyr-reference C CXX)
 
+# Put in an option to force the device back into programable state for automated testing
+option(FPRIME_CI_FAILSAFE_ENABLED "Cycle count before a forced reset to programable state" OFF)
+if (FPRIME_CI_FAILSAFE_ENABLED)
+    set(FPRIME_CI_FAILSAFE_CYCLE_COUNT 6000 CACHE STRING "Cycles before a forced reset")
+    add_compile_definitions(FPRIME_CI_FAILSAFE_CYCLE_COUNT=${FPRIME_CI_FAILSAFE_CYCLE_COUNT})
+endif()
+
 ###
 # F' Core Setup
 # This includes all of the F prime core components, and imports the make-system.

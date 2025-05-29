@@ -1,4 +1,4 @@
-module Svc {
+module Components {
 
   @ Handles FATAL calls
   passive component FatalHandler {

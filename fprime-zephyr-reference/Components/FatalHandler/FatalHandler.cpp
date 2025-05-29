@@ -1,6 +1,6 @@
 // ======================================================================
 // \title  FatalHandlerImpl.cpp
-// \author tcanham
+// \author mstarch
 // \brief  cpp file for FatalHandler component implementation class
 //
 // \copyright
@@ -10,46 +10,52 @@
 //
 // ======================================================================
 
-
-#include <fprime-zephyr-reference/Components/FatalHandler.hpp>
+#include <Fw/Logger/Logger.hpp>
+#include <fprime-zephyr-reference/Components/FatalHandler/FatalHandler.hpp>
 #include <Fw/FPrimeBasicTypes.hpp>
+#include <zephyr/sys/reboot.h>
 
-namespace Svc {
+namespace Components {
 
   // ----------------------------------------------------------------------
   // Construction, initialization, and destruction
   // ----------------------------------------------------------------------
 
-  FatalHandlerComponentImpl ::
-    FatalHandlerComponentImpl(
+  FatalHandler ::
+    FatalHandler(
         const char *const compName
     ) : FatalHandlerComponentBase(compName)
   {
 
   }
 
-  FatalHandlerComponentImpl ::
-    ~FatalHandlerComponentImpl()
+  FatalHandler ::
+    ~FatalHandler()
   {
 
   }
 
-  void reboot() {
-    #if defined(FPRIME_CI_FAILSAFE_CYCLE_COUNT)
+  void FatalHandler::reboot() {
+  // When running in CI failsafe mode and the board is a teensy,
+  // then we should invoke bkpt #251 to trigger the soft reboot enabling a
+  // flash of new software
+  #if defined(FPRIME_CI_FAILSAFE_CYCLE_COUNT)
       // Magic bootloader breakpoint, provided by PRJC
-      asm("bkpt #251");
-    #endif
-    while(1) {}
+      if (strncmp(CONFIG_BOARD, "teensy", 6) == 0) {}
+        asm("bkpt #251");
+      }
+  #endif
+      // Otherwise, use Zephyr to reboot the system
+      sys_reboot(SYS_REBOOT_COLD);
+      while(1) {}
   }
 
-  void FatalHandlerComponentImpl::FatalReceive_handler(
+  void FatalHandler::FatalReceive_handler(
             const FwIndexType portNum,
             FwEventIdType Id) {
         Fw::Logger::log("FATAL %" PRI_FwEventIdType "handled.\n",Id);
-#if defined()
-
-
-        while (true) {} // Returning might be bad
+        Os::Task::delay(Fw::TimeInterval(0, 1000)); // Delay to allow log to be processed
+        this->reboot(); // Reboot the system
     }
 
 

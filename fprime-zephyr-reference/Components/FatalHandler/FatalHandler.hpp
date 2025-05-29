@@ -1,6 +1,6 @@
 // ======================================================================
 // \title  FatalHandlerImpl.hpp
-// \author tcanham
+// \author mstarch
 // \brief  hpp file for FatalHandler component implementation class
 //
 // \copyright
@@ -13,11 +13,11 @@
 #ifndef FatalHandler_HPP
 #define FatalHandler_HPP
 
-#include "Svc/FatalHandler/FatalHandlerComponentAc.hpp"
+#include "fprime-zephyr-reference/Components/FatalHandler/FatalHandlerComponentAc.hpp"
 
-namespace Svc {
+namespace Components {
 
-  class FatalHandlerComponentImpl final :
+  class FatalHandler final :
     public FatalHandlerComponentBase
   {
 
@@ -29,13 +29,13 @@ namespace Svc {
 
       //! Construct object FatalHandler
       //!
-      FatalHandlerComponentImpl(
+      FatalHandler(
           const char *const compName /*!< The component name*/
       );
 
       //! Destroy object FatalHandler
       //!
-      ~FatalHandlerComponentImpl();
+      ~FatalHandler();
 
       //! Reboot the device
       //!

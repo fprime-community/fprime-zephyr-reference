@@ -70,7 +70,7 @@ module ReferenceDeployment {
 
   #instance fatalAdapter: Svc.AssertFatalAdapter base id 0x4200
 
-  instance fatalHandler: Svc.FatalHandler base id 0x4300
+  instance fatalHandler: Components.FatalHandler base id 0x4300
 
   instance bufferManager: Svc.BufferManager base id 0x4400
 

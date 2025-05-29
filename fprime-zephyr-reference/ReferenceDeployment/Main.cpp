@@ -44,9 +44,7 @@ int main(int argc, char* argv[]) {
         #if defined(FPRIME_CI_FAILSAFE_CYCLE_COUNT)
             static U64 failsafe_count = 0;
             if (FPRIME_CI_FAILSAFE_CYCLE_COUNT <= failsafe_count) {
-                // Magic bootloader breakpoint, provided by PRJC
-                asm("bkpt #251");
-                while(1) {}
+                fatalHandler.reboot();        
             }
             failsafe_count = failsafe_count + 1;
         #endif

@@ -41,7 +41,7 @@ namespace Components {
   // flash of new software
   #if defined(FPRIME_CI_FAILSAFE_CYCLE_COUNT)
       // Magic bootloader breakpoint, provided by PRJC
-      if (strncmp(CONFIG_BOARD, "teensy", 6) == 0) {}
+      if (strncmp(CONFIG_BOARD, "teensy", 6) == 0) {
         asm("bkpt #251");
       }
   #endif

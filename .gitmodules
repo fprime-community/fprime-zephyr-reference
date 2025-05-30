@@ -6,4 +6,4 @@
 	url = https://github.com/zephyrproject-rtos/zephyr.git
 [submodule "lib/fprime-zephyr"]
 	path = lib/fprime-zephyr
-	url = git@github.com:fprime-community/fprime-zephyr.git
+	url = https://github.com/lestarch/fprime-zephyr.git

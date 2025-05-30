@@ -5,7 +5,7 @@
 
 cmake_minimum_required(VERSION 3.24.2)
 
-find_package(Zephyr)
+find_package(Zephyr HINTS "${CMAKE_CURRENT_LIST_DIR}/lib/zephyr-workspace")
 project(fprime-zephyr-reference C CXX)
 
 # Put in an option to force the device back into programable state for automated testing

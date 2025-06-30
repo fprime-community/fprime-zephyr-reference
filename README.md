@@ -24,8 +24,8 @@ Installation Steps (See https://docs.zephyrproject.org/latest/develop/getting_st
 * When changing boards
   * Update `settings.ini` to the new board
   * Update `prj.conf` to the new board's Device PID and VID configurations 
-  * run `fprime-util generate -f` to generate new build files 
-  * run `fprime-util build` to build the new project 
+  * Run `fprime-util generate -f` to generate new build files 
+  * Run `fprime-util build` to build the new project 
 * **Zephyr Supported Boards**: https://docs.zephyrproject.org/latest/boards/index.html#
 * Remember to ensure new build is successful before flashing onto board
 * For debugging using **FDTI** cable, see relevant pinout, https://microcontrollerslab.com/ftdi-usb-to-serial-converter-cable-use-linux-windows/

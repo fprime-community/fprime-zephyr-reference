@@ -3,6 +3,6 @@ base = zephyr
 
 [manifest]
 path = zephyr
-group-filter = -hal,-debug
-project-filter = -.*,+hal_nxp,+cmsis,+cmsis_6
+;group-filter = -hal,-debug
+;project-filter = -.*,+hal_nxp,+cmsis,+cmsis_6
 

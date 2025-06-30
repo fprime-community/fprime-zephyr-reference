@@ -25,20 +25,20 @@ const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(cdc_acm_uart0));
 int main(int argc, char* argv[]) {
     Os::init();
     // Object for communicating state to the reference topology
-    ReferenceDeployment::TopologyState inputs;
+    ReferenceDeployment::TopologyState inputs; // Part of FPrime, comment out for debugging
     inputs.baudRate = 115200;
     inputs.uartDevice = serial;
 
 
     // Setup, cycle, and teardown topology
     Fw::Logger::log("[F Prime] Initializing topology\n");
-    ReferenceDeployment::setupTopology(inputs);
+    ReferenceDeployment::setupTopology(inputs); // Part of FPrime, comment out for debugging
     Fw::Logger::log("[F Prime] Entering main loop\n");
 
     // Main program loop
     while (true) {
         // This cycles the rate group by spinning on a timer
-        ReferenceDeployment::clockSource.cycle();
+        ReferenceDeployment::clockSource.cycle(); // Part of FPrime, comment out for debugging
         // This section will force teensy specific boards into the programing bootloader after the specified number of
         // cycles. This will ensure that CI programs will always return to a programable state.
         #if defined(FPRIME_CI_FAILSAFE_CYCLE_COUNT)

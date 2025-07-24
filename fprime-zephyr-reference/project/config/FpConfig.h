@@ -26,13 +26,13 @@ extern "C" {
 
 // Define enumeration for Time base types
 // Note: maintaining C-style
-typedef enum {
-    TB_NONE,              //!< No time base has been established
-    TB_PROC_TIME,         //!< Indicates time is processor cycle time. Not tied to external time
-    TB_WORKSTATION_TIME,  //!< Time as reported on workstation where software is running. For testing.
-    TB_DONT_CARE =
-        0xFFFF  //!< Don't care value for sequences. If FwTimeBaseStoreType is changed, value should be changed
-} TimeBase;
+// typedef enum {
+//     TB_NONE,              //!< No time base has been established
+//     TB_PROC_TIME,         //!< Indicates time is processor cycle time. Not tied to external time
+//     TB_WORKSTATION_TIME,  //!< Time as reported on workstation where software is running. For testing.
+//     TB_DONT_CARE =
+//         0xFFFF  //!< Don't care value for sequences. If FwTimeBaseStoreType is changed, value should be changed
+// } TimeBase;
 #define FW_CONTEXT_DONT_CARE 0xFF  //!< Don't care value for time contexts in sequences
 
 // ----------------------------------------------------------------------

@@ -15,6 +15,15 @@ if (FPRIME_CI_FAILSAFE_ENABLED)
     add_compile_definitions(FPRIME_CI_FAILSAFE_CYCLE_COUNT=${FPRIME_CI_FAILSAFE_CYCLE_COUNT})
 endif()
 
+# Configure custom atomic implementation for RP2040 boards
+if(BOARD STREQUAL "rpi_pico")
+    message(STATUS "[INFO] Configuring custom atomic implementation for ${BOARD}")
+
+    # Add include directory to override <atomic> header and allow use of std::atomic
+    include_directories(BEFORE SYSTEM "${CMAKE_CURRENT_LIST_DIR}/lib/fprime-zephyr/fprime-zephyr/Os/StdAtomic")
+
+endif()
+
 ###
 # F' Core Setup
 # This includes all of the F prime core components, and imports the make-system.

@@ -11,7 +11,7 @@
 // ======================================================================
 
 #include <Fw/Logger/Logger.hpp>
-#include <fprime-zephyr-reference/Components/FatalHandler/FatalHandler.hpp>
+#include <FprimeZephyrReference/Components/FatalHandler/FatalHandler.hpp>
 #include <Fw/FPrimeBasicTypes.hpp>
 #include <zephyr/sys/reboot.h>
 

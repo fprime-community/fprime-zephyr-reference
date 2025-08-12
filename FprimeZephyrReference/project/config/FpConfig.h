@@ -21,19 +21,8 @@ extern "C" {
 // ----------------------------------------------------------------------
 // Type aliases
 // ----------------------------------------------------------------------
-
-
-
-// Define enumeration for Time base types
-// Note: maintaining C-style
-typedef enum {
-    TB_NONE,              //!< No time base has been established
-    TB_PROC_TIME,         //!< Indicates time is processor cycle time. Not tied to external time
-    TB_WORKSTATION_TIME,  //!< Time as reported on workstation where software is running. For testing.
-    TB_DONT_CARE =
-        0xFFFF  //!< Don't care value for sequences. If FwTimeBaseStoreType is changed, value should be changed
-} TimeBase;
 #define FW_CONTEXT_DONT_CARE 0xFF  //!< Don't care value for time contexts in sequences
+
 
 // ----------------------------------------------------------------------
 // Configuration switches
@@ -246,7 +235,7 @@ typedef enum {
 
 // Specifies the maximum size of a file upload chunk
 #ifndef FW_FILE_BUFFER_MAX_SIZE
-#define FW_FILE_BUFFER_MAX_SIZE 255  //!< Max size of file buffer (i.e. chunk of file)
+#define FW_FILE_BUFFER_MAX_SIZE FW_COM_BUFFER_MAX_SIZE  //!< Max size of file buffer (i.e. chunk of file)
 #endif
 
 // Specifies the maximum size of a string in an interface call
@@ -274,17 +263,6 @@ typedef enum {
 // Some settings to enable AMPCS compatibility. This breaks regular ISF GUI compatibility
 #ifndef FW_AMPCS_COMPATIBLE
 #define FW_AMPCS_COMPATIBLE 0  //!< Whether or not JPL AMPCS ground system support is enabled.
-#endif
-
-// These settings configure whether or not the timebase and context values for the Fw::Time
-// class are used. Some systems may not use or need those fields
-
-#ifndef FW_USE_TIME_BASE
-#define FW_USE_TIME_BASE 1  //!< Whether or not to use the time base
-#endif
-
-#ifndef FW_USE_TIME_CONTEXT
-#define FW_USE_TIME_CONTEXT 1  //!< Whether or not to serialize the time context
 #endif
 
 // Configuration for Fw::String

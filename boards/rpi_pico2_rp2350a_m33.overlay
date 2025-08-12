@@ -3,3 +3,10 @@
         compatible = "zephyr,cdc-acm-uart";
     };
 };
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+    };
+};

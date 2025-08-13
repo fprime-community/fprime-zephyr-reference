@@ -12,7 +12,6 @@ const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(cdc_acm_uart0));
 
 int main(int argc, char* argv[]) {
     Os::init();
-
     // Object for communicating state to the topology
     ReferenceDeployment::TopologyState inputs;
     inputs.uartDevice = serial;
@@ -20,8 +19,7 @@ int main(int argc, char* argv[]) {
  
     // Setup, cycle, and teardown topology
     ReferenceDeployment::setupTopology(inputs);
-
-    ReferenceDeployment::startRateGroups(Fw::TimeInterval(0,100));  // Program loop cycling rate groups at 10Hz
+    ReferenceDeployment::startRateGroups(); // Program loop
     ReferenceDeployment::teardownTopology(inputs);
     return 0;
 }

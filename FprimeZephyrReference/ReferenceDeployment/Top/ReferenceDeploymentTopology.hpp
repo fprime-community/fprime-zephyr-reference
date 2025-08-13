@@ -65,7 +65,7 @@ void teardownTopology(const TopologyState& state);
  * This function starts the rate group driver, which triggers the rate groups.
  * Loops forever.
  */
-void startRateGroups(Fw::TimeInterval interval = Fw::TimeInterval(1,0));
+void startRateGroups();
 
 /**
  * \brief stop the rate groups 

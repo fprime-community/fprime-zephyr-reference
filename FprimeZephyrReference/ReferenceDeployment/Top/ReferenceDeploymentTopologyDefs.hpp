@@ -45,10 +45,8 @@
  * ```
  */
 namespace PingEntries {
-    namespace ReferenceDeployment_rateGroup1 {enum { WARN = 3, FATAL = 5 };}
-    namespace ReferenceDeployment_rateGroup2 {enum { WARN = 3, FATAL = 5 };}
-    namespace ReferenceDeployment_rateGroup3 {enum { WARN = 3, FATAL = 5 };}
-    namespace ReferenceDeployment_cmdSeq {enum { WARN = 3, FATAL = 5 };}
+    namespace ReferenceDeployment_rateGroup10Hz {enum { WARN = 3, FATAL = 5 };}
+    namespace ReferenceDeployment_rateGroup1Hz {enum { WARN = 3, FATAL = 5 };}
 }  // namespace PingEntries
 
 // Definitions are placed within a namespace named after the deployment

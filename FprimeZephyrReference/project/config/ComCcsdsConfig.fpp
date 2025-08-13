@@ -11,12 +11,12 @@ module ComCcsdsConfig {
     }
 
     module Priorities {
-        constant comQueue   = 2
+        constant comQueue   = 5
     }
 
     # Queue configuration constants
     module QueueDepths {
-        constant events      = 5             
+        constant events      = 20             
         constant tlm         = 20           
         constant file        = 1            
     }

@@ -5,7 +5,8 @@ module ReferenceDeployment {
   # ----------------------------------------------------------------------
 
   enum Ports_RateGroups {
-    rateGroup1
+    rateGroup10Hz
+    rateGroup1Hz
   }
 
   topology ReferenceDeployment {
@@ -20,9 +21,9 @@ module ReferenceDeployment {
   # Instances used in the topology
   # ----------------------------------------------------------------------
     instance chronoTime
-    instance rateGroup1
+    instance rateGroup10Hz
+    instance rateGroup1Hz
     instance rateGroupDriver
-    #instance version
     instance timer
     instance comDriver
 
@@ -32,16 +33,16 @@ module ReferenceDeployment {
 
     command connections instance CdhCore.cmdDisp
     event connections instance CdhCore.events
-#    telemetry connections instance CdhCore.tlmSend
     text event connections instance CdhCore.textLogger
     health connections instance CdhCore.$health
     time connections instance chronoTime
+    telemetry connections instance CdhCore.tlmSend
 
   # ----------------------------------------------------------------------
   # Telemetry packets (only used when TlmPacketizer is used)
   # ----------------------------------------------------------------------
 
-    # include "ReferenceDeploymentPackets.fppi"
+  include "ReferenceDeploymentPackets.fppi"
 
   # ----------------------------------------------------------------------
   # Direct graph specifiers
@@ -50,7 +51,7 @@ module ReferenceDeployment {
     connections ComCcsds_CdhCore {
       # Core events and telemetry to communication queue
       CdhCore.events.PktSend -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.EVENTS]
-      #CdhCore.tlmSend.PktSend -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.TELEMETRY]
+      CdhCore.tlmSend.PktSend -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.TELEMETRY]
 
       # Router to Command Dispatcher
       ComCcsds.fprimeRouter.commandOut -> CdhCore.cmdDisp.seqCmdBuff
@@ -76,12 +77,15 @@ module ReferenceDeployment {
       # timer to drive rate group
       timer.CycleOut -> rateGroupDriver.CycleIn
 
-      # Rate group 1
-      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
-      rateGroup1.RateGroupMemberOut[0] -> comDriver.schedIn
-      rateGroup1.RateGroupMemberOut[1] -> ComCcsds.comQueue.run
-      rateGroup1.RateGroupMemberOut[2] -> CdhCore.$health.Run
-      rateGroup1.RateGroupMemberOut[3] -> ComCcsds.commsBufferManager.schedIn
+      # High rate (10Hz) rate group
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup10Hz] -> rateGroup10Hz.CycleIn
+      rateGroup10Hz.RateGroupMemberOut[0] -> comDriver.schedIn
+
+      # Slow rate (1Hz) rate group
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1Hz] -> rateGroup1Hz.CycleIn
+      rateGroup1Hz.RateGroupMemberOut[0] -> ComCcsds.comQueue.run
+      rateGroup1Hz.RateGroupMemberOut[1] -> CdhCore.$health.Run
+      rateGroup1Hz.RateGroupMemberOut[2] -> ComCcsds.commsBufferManager.schedIn
     }
 
     connections ReferenceDeployment {

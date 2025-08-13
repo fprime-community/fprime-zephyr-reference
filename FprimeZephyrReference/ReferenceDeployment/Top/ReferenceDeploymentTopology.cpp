@@ -17,12 +17,25 @@ using namespace ReferenceDeployment;
 // Instantiate a malloc allocator for cmdSeq buffer allocation
 Fw::MallocAllocator mallocator;
 
+constexpr FwSizeType BASE_RATEGROUP_PERIOD_MS = 1; // 1Khz 
+
+// Helper function to calculate the period for a given rate group frequency
+constexpr FwSizeType getRateGroupPeriod(const FwSizeType hz) {
+    return 1000 / (hz * BASE_RATEGROUP_PERIOD_MS);
+}
+
 // The reference topology divides the incoming clock signal (1Hz) into sub-signals: 1Hz, 1/2Hz, and 1/4Hz with 0 offset
-Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{1, 0}}};
+Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{
+    { // Array of divider objects
+        {getRateGroupPeriod(10), 0}, // 10Hz
+        {getRateGroupPeriod(1), 0},  // 1Hz
+    }
+};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
-U32 rateGroup1Context[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {};
+U32 rateGroup10HzContext[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {getRateGroupPeriod(10)};
+U32 rateGroup1HzContext[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {getRateGroupPeriod(1)};
 
 enum TopologyConstants {
     COMM_PRIORITY = 100,
@@ -39,7 +52,8 @@ void configureTopology() {
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
     // Rate groups require context arrays.
-    rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
+    rateGroup10Hz.configure(rateGroup10HzContext, FW_NUM_ARRAY_ELEMENTS(rateGroup10HzContext));
+    rateGroup1Hz.configure(rateGroup1HzContext, FW_NUM_ARRAY_ELEMENTS(rateGroup1HzContext));
 }
 
 // Public functions for use in main program are namespaced with deployment name ReferenceDeployment
@@ -50,7 +64,7 @@ void setupTopology(const TopologyState& state) {
     // Autocoded id setup. Function provided by autocoder.
     setBaseIds();
     // Autocoded connection wiring. Function provided by autocoder.
-    connectComponents();
+    connectComponents();    
     // Autocoded command registration. Function provided by autocoder.
     regCommands();
     // Autocoded configuration. Function provided by autocoder.
@@ -61,12 +75,13 @@ void setupTopology(const TopologyState& state) {
     loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
+    
     // Uplink is configured for receive so a socket task is started
     comDriver.configure(state.uartDevice, state.baudRate);
 }
 
-void startRateGroups(Fw::TimeInterval interval) {
-    timer.configure(interval.getSeconds() * 1000 + interval.getUSeconds()/1000);  // 10Hz core clock 
+void startRateGroups() {
+    timer.configure(BASE_RATEGROUP_PERIOD_MS);
     timer.start();
     while (1) {
         timer.cycle();

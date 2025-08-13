@@ -45,8 +45,9 @@ namespace Components {
         asm("bkpt #251");
       }
   #endif
-      // Otherwise, use Zephyr to reboot the system
-      sys_reboot(SYS_REBOOT_COLD);
+      while(1) {}
+    // Otherwise, use Zephyr to reboot the system
+      //sys_reboot(SYS_REBOOT_COLD);
       while(1) {}
   }
 

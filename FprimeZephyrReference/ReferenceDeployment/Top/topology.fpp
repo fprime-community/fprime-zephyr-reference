@@ -86,6 +86,7 @@ module ReferenceDeployment {
       rateGroup1Hz.RateGroupMemberOut[0] -> ComCcsds.comQueue.run
       rateGroup1Hz.RateGroupMemberOut[1] -> CdhCore.$health.Run
       rateGroup1Hz.RateGroupMemberOut[2] -> ComCcsds.commsBufferManager.schedIn
+      rateGroup1Hz.RateGroupMemberOut[3] -> CdhCore.tlmSend.Run
     }
 
     connections ReferenceDeployment {

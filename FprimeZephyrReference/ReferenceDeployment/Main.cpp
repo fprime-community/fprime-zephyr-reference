@@ -8,17 +8,16 @@
 #include <zephyr/sys/printk.h>
 #include <zephyr/kernel.h>
 
-const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(uart0));
+const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(cdc_acm_uart0));
 
 int main(int argc, char* argv[]) {
-    k_sleep(K_MSEC(3000)); // Wait for initialization
+    // ** DO NOT REMOVE **//
+    //
+    // This sleep is necessary to allow the USB CDC ACM interface to initialize before
+    // the application starts writing to it.
+    k_sleep(K_MSEC(3000));
     
     Os::init();
-    
-    printk("Starting software\n");
-    //k_sleep(K_MSEC(1000)); // Allow time for the console to initialize
-    printk("Software started\n");
-
     // Object for communicating state to the topology
     ReferenceDeployment::TopologyState inputs;
     inputs.uartDevice = serial;
@@ -26,9 +25,7 @@ int main(int argc, char* argv[]) {
  
     // Setup, cycle, and teardown topology
     ReferenceDeployment::setupTopology(inputs);
-    printk("Starting main loop\n");
     ReferenceDeployment::startRateGroups(); // Program loop
-    printk("Stopping main loop\n");
     ReferenceDeployment::teardownTopology(inputs);
     return 0;
 }

@@ -45,18 +45,18 @@ namespace Components {
         asm("bkpt #251");
       }
   #endif
-      while(1) {}
+    //  while(1) {}
     // Otherwise, use Zephyr to reboot the system
       //sys_reboot(SYS_REBOOT_COLD);
-      while(1) {}
+   //   while(1) {}
   }
 
   void FatalHandler::FatalReceive_handler(
             const FwIndexType portNum,
             FwEventIdType Id) {
         Fw::Logger::log("FATAL %" PRI_FwEventIdType "handled.\n",Id);
-        Os::Task::delay(Fw::TimeInterval(0, 1000)); // Delay to allow log to be processed
-        this->reboot(); // Reboot the system
+        //Os::Task::delay(Fw::TimeInterval(0, 1000)); // Delay to allow log to be processed
+        //this->reboot(); // Reboot the system
     }
 
 

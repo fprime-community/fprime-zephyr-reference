@@ -13,7 +13,6 @@
 
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Top/")
 
-message(STATUS "${FPRIME_PLATFORM} >>>")
 if (FPRIME_PLATFORM STREQUAL "Zephyr")
    register_fprime_zephyr_deployment(
             ${FPRIME_CURRENT_MODULE}

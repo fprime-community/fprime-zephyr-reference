@@ -37,10 +37,6 @@ Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{
 U32 rateGroup10HzContext[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {getRateGroupPeriod(10)};
 U32 rateGroup1HzContext[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {getRateGroupPeriod(1)};
 
-enum TopologyConstants {
-    COMM_PRIORITY = 100,
-};
-
 /**
  * \brief configure/setup components in project-specific way
  *
@@ -60,31 +56,21 @@ void configureTopology() {
 namespace ReferenceDeployment {
 void setupTopology(const TopologyState& state) {
     // Autocoded initialization. Function provided by autocoder.
-    printk("Initializing components\n");
     initComponents(state);
-    printk("Components initialized\n");
     // Autocoded id setup. Function provided by autocoder.
     setBaseIds();
-    printk("Base IDs set1\n");
-
     // Autocoded connection wiring. Function provided by autocoder.
     connectComponents();
-    printk("Components connected\n");
     // Autocoded command registration. Function provided by autocoder.
     regCommands();
-    printk("Commands registered\n");
     // Autocoded configuration. Function provided by autocoder.
     configComponents(state);
-    printk("Components configured\n");
     // Project-specific component configuration. Function provided above. May be inlined, if desired.
     configureTopology();
-    printk("Topology configured\n");
     // Autocoded parameter loading. Function provided by autocoder.
     loadParameters();
-    printk("Parameters loaded\n");
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
-    printk("Tasks started\n");
     
     // Uplink is configured for receive so a socket task is started
     comDriver.configure(state.uartDevice, state.baudRate);

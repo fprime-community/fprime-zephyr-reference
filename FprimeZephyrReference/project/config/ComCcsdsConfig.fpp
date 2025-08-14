@@ -7,7 +7,7 @@ module ComCcsdsConfig {
     }
     
     module StackSizes {
-        constant comQueue   = 8 * 1024
+        constant comQueue   = 8 * 1024 # Must match prj.conf thread stack size
     }
 
     module Priorities {
@@ -29,11 +29,11 @@ module ComCcsdsConfig {
 
     # Buffer management constants
     module BuffMgr {
-        constant frameAccumulatorSize  = 2048     
-        constant commsBuffSize         = 2048      
-        constant commsFileBuffSize     = 3000      
-        constant commsBuffCount        = 5        
-        constant commsFileBuffCount    = 5       
-        constant commsBuffMgrId        = 200      
+        constant frameAccumulatorSize  = 2048
+        constant commsBuffSize         = 2048
+        constant commsFileBuffSize     = 1
+        constant commsBuffCount        = 5
+        constant commsFileBuffCount    = 1
+        constant commsBuffMgrId        = 200
     }
 }

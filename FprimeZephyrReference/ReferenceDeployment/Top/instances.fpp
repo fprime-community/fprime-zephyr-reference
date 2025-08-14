@@ -19,7 +19,7 @@ module ReferenceDeployment {
 
   module Default {
     constant QUEUE_SIZE = 10
-    constant STACK_SIZE = 8 * 1024
+    constant STACK_SIZE = 8 * 1024 # Must match prj.conf thread stack size
   }
 
   # ----------------------------------------------------------------------

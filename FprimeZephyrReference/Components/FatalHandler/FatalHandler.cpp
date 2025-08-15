@@ -11,7 +11,7 @@
 // ======================================================================
 
 #include <Fw/Logger/Logger.hpp>
-#include <fprime-zephyr-reference/Components/FatalHandler/FatalHandler.hpp>
+#include <FprimeZephyrReference/Components/FatalHandler/FatalHandler.hpp>
 #include <Fw/FPrimeBasicTypes.hpp>
 #include <zephyr/sys/reboot.h>
 
@@ -45,9 +45,8 @@ namespace Components {
         asm("bkpt #251");
       }
   #endif
-      // Otherwise, use Zephyr to reboot the system
-      sys_reboot(SYS_REBOOT_COLD);
-      while(1) {}
+    // Otherwise, use Zephyr to reboot the system
+    sys_reboot(SYS_REBOOT_COLD);
   }
 
   void FatalHandler::FatalReceive_handler(

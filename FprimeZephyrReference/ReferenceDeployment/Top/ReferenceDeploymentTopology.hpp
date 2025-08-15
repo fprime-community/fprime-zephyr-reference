@@ -7,7 +7,7 @@
 #define REFERENCEDEPLOYMENT_REFERENCEDEPLOYMENTTOPOLOGY_HPP
 // Included for access to ReferenceDeployment::TopologyState and ReferenceDeployment::ConfigObjects::pingEntries. These definitions are required by the
 // autocoder, but are also used in this hand-coded topology.
-#include <fprime-zephyr-reference/ReferenceDeployment/Top/ReferenceDeploymentTopologyDefs.hpp>
+#include <FprimeZephyrReference/ReferenceDeployment/Top/ReferenceDeploymentTopologyDefs.hpp>
 
 // Remove unnecessary ReferenceDeployment:: qualifications
 using namespace ReferenceDeployment;
@@ -58,6 +58,21 @@ void setupTopology(const TopologyState& state);
  * \param state: state object provided to setupTopology
  */
 void teardownTopology(const TopologyState& state);
+
+/**
+ * \brief cycle the rate group driver
+ *
+ * This function starts the rate group driver, which triggers the rate groups.
+ * Loops forever.
+ */
+void startRateGroups();
+
+/**
+ * \brief stop the rate groups 
+ *
+ * This stops the cycle started by startRateGroups.
+ */
+void stopRateGroups();
 
 } // namespace ReferenceDeployment
 #endif

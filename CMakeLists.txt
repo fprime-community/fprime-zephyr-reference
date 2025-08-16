@@ -4,7 +4,10 @@
 ####
 
 cmake_minimum_required(VERSION 3.24.2)
-
+# Patch in std-atomic implementations
+if (BOARD STREQUAL "rpi_pico" OR FPRIME_ZEPHYR_USE_STD_ATOMIC_FIX)
+    include_directories(BEFORE "${CMAKE_CURRENT_LIST_DIR}/lib/fprime-zephyr/fprime-zephyr/Os/StdAtomic")
+endif()
 find_package(Zephyr HINTS "${CMAKE_CURRENT_LIST_DIR}/lib/zephyr-workspace")
 project(fprime-zephyr-reference C CXX)
 

@@ -6,6 +6,8 @@
 #ifndef REFERENCEDEPLOYMENT_REFERENCEDEPLOYMENTTOPOLOGYDEFS_HPP
 #define REFERENCEDEPLOYMENT_REFERENCEDEPLOYMENTTOPOLOGYDEFS_HPP
 
+#include "fprime-sensors/MpuImu/Subtopology/SubtopologyTopologyDefs.hpp"
+
 // Subtopology PingEntries includes
 #include "Svc/Subtopologies/CdhCore/PingEntries.hpp"
 #include "Svc/Subtopologies/ComCcsds/PingEntries.hpp"
@@ -64,6 +66,8 @@ struct TopologyState {
     U32 baudRate;          //!< Baud rate for UART communication
     CdhCore::SubtopologyState cdhCore;           //!< Subtopology state for CdhCore
     ComCcsds::SubtopologyState comCcsds;         //!< Subtopology state for ComCcsds 
+    MpuImu::SubtopologyState mpu;
+
 };
 
 namespace PingEntries = ::PingEntries;

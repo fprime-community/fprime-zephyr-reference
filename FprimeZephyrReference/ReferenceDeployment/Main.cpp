@@ -9,6 +9,7 @@
 #include <zephyr/kernel.h>
 
 const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(cdc_acm_uart0));
+const struct i2c_dt_spec imuDevice = DT_NODELABEL(lpi2c1);
 
 int main(int argc, char* argv[]) {
     // ** DO NOT REMOVE **//
@@ -22,6 +23,7 @@ int main(int argc, char* argv[]) {
     ReferenceDeployment::TopologyState inputs;
     inputs.uartDevice = serial;
     inputs.baudRate = 115200;
+    inputs.mpu.device = imuDevice; 
  
     // Setup, cycle, and teardown topology
     ReferenceDeployment::setupTopology(inputs);

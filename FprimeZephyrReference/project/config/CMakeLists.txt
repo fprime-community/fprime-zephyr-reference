@@ -12,5 +12,8 @@ register_fprime_config(
         "${CMAKE_CURRENT_LIST_DIR}/CommandDispatcherImplCfg.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/FpConfig.h"
         "${CMAKE_CURRENT_LIST_DIR}/TlmPacketizerCfg.hpp"
+        "${CMAKE_CURRENT_LIST_DIR}/MpuImuSubtopologyConfig.fpp"
+        "${CMAKE_CURRENT_LIST_DIR}/MpuImuSubtopologyConfig.hpp"
+
     INTERFACE
 )

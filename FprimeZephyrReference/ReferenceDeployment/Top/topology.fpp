@@ -16,7 +16,9 @@ module ReferenceDeployment {
   # ----------------------------------------------------------------------
     import CdhCore.Subtopology
     import ComCcsds.Subtopology
-    
+    # import NmeaGps.Subtopology
+    import MpuImu.Subtopology
+
   # ----------------------------------------------------------------------
   # Instances used in the topology
   # ----------------------------------------------------------------------

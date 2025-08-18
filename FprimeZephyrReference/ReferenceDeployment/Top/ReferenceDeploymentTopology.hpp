@@ -9,6 +9,7 @@
 // autocoder, but are also used in this hand-coded topology.
 #include <FprimeZephyrReference/ReferenceDeployment/Top/ReferenceDeploymentTopologyDefs.hpp>
 
+
 // Remove unnecessary ReferenceDeployment:: qualifications
 using namespace ReferenceDeployment;
 namespace ReferenceDeployment {

@@ -13,3 +13,15 @@
 	status = "okay";
 	current-speed = < 115200 >;
 };
+
+&lpi2c1 {
+	status = "okay";
+};
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+		imu = &lpi2c1; 
+    };
+};
+

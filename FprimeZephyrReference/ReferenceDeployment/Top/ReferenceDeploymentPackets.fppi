@@ -17,7 +17,7 @@ telemetry packets ReferenceDeploymentPackets {
   }
 
 
-  packet HealthAuxillary id 3 group 2 {
+  packet HealthAuxillary id 3 group 3 {
     ComCcsds.commsBufferManager.TotalBuffs
     ComCcsds.commsBufferManager.CurrBuffs
     ComCcsds.comQueue.buffQueueDepth
@@ -28,6 +28,10 @@ telemetry packets ReferenceDeploymentPackets {
     CdhCore.version.FrameworkVersion
     CdhCore.version.ProjectVersion
     CdhCore.version.LibraryVersion01
+  }
+
+  packet Imu id 5 group 2 {
+    MpuImu.imuManager.Reading
   }
 
 

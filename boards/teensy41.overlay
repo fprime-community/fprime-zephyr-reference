@@ -13,3 +13,10 @@
 	status = "okay";
 	current-speed = < 115200 >;
 };
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,sram = &ocram2;
+    };
+};

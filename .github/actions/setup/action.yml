@@ -1,0 +1,9 @@
+name: 'Zephyr Reference Setup'
+description: 'Set up Zephyr environment for Zephyr Reference CI'
+runs:
+  using: "composite"
+  steps:
+    - name: "Set up Zephyr CI"
+      uses: ./lib/fprime-zephyr/.github/actions/setup
+      with:
+        workspace_directory: ./lib/zephyr-workspace

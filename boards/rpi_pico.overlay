@@ -4,6 +4,40 @@
     };
 };
 
+&spi1 {
+    status = "okay";
+    // CS pin 16 (Feather RP2040 RFM): https://learn.adafruit.com/feather-rp2040-rfm95/pinouts
+    cs-gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+    pinctrl-0 = <&spi1_default>;
+    pinctrl-names = "default";
+    
+    lora0: sx1276@0 {
+        compatible = "semtech,sx1276";
+        reg = <0>;
+        spi-max-frequency = <125000>;
+        // D0, D1 pin 21,22 (Feather RP2040 RFM)
+        dio-gpios =  <&gpio0 21 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>,<&gpio0 22 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+        // Reset pin 17 (Feather RP2040 RFM)
+        reset-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+        power-amplifier-output = "pa-boost";
+        label = "HOPE_RF";
+    };
+};
+&pinctrl {
+    spi1_default: spi1_default {
+        group1 {
+            // Set P14, P15 to SCK/TX for SPI 1
+            pinmux = <SPI1_SCK_P14>, <SPI1_TX_P15>;
+        };
+
+        group2 {
+            // Set P8 for SPI 1 (with input)
+            pinmux = <SPI1_RX_P8>;
+            input-enable;
+        };
+    };
+};
+
 / {
     chosen {
         zephyr,console = &cdc_acm_uart0;

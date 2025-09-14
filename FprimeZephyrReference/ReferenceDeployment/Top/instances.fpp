@@ -36,6 +36,7 @@ module ReferenceDeployment {
     stack size Default.STACK_SIZE \
     priority 4
 
+  instance radio: Zephyr.LoRa base id 0x10003000
 
   # ----------------------------------------------------------------------
   # Queued component instances
@@ -55,5 +56,7 @@ module ReferenceDeployment {
   instance timer: Zephyr.ZephyrRateDriver base id 0x10013000
 
   instance comDriver: Zephyr.ZephyrUartDriver base id 0x10014000
+
+  instance nullPrmDb: Components.NullPrmDb base id 0x10015000
 
 }

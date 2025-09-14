@@ -53,4 +53,6 @@ telemetry packets ReferenceDeploymentPackets {
   CdhCore.version.CustomVersion08
   CdhCore.version.CustomVersion09
   CdhCore.version.CustomVersion10
+  ReferenceDeployment.radio.LastSnr
+  ReferenceDeployment.radio.LastRssi
 }

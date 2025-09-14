@@ -71,9 +71,8 @@ void setupTopology(const TopologyState& state) {
     loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
-    
     // Uplink is configured for receive so a socket task is started
-    comDriver.configure(state.uartDevice, state.baudRate);
+    radio.start(state.uartDevice);
 }
 
 void startRateGroups() {

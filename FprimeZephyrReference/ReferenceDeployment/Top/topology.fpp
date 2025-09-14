@@ -15,7 +15,7 @@ module ReferenceDeployment {
   # Subtopology imports
   # ----------------------------------------------------------------------
     import CdhCore.Subtopology
-    import ComCcsds.Subtopology
+    import ComCcsds.FramingSubtopology
     
   # ----------------------------------------------------------------------
   # Instances used in the topology
@@ -25,7 +25,8 @@ module ReferenceDeployment {
     instance rateGroup1Hz
     instance rateGroupDriver
     instance timer
-    instance comDriver
+    instance radio
+    instance nullPrmDb
 
   # ----------------------------------------------------------------------
   # Pattern graph specifiers
@@ -37,6 +38,7 @@ module ReferenceDeployment {
     health connections instance CdhCore.$health
     time connections instance chronoTime
     telemetry connections instance CdhCore.tlmSend
+    param connections instance nullPrmDb
 
   # ----------------------------------------------------------------------
   # Telemetry packets (only used when TlmPacketizer is used)
@@ -61,16 +63,17 @@ module ReferenceDeployment {
 
     connections Communications {
       # ComDriver buffer allocations
-      comDriver.allocate      -> ComCcsds.commsBufferManager.bufferGetCallee
-      comDriver.deallocate    -> ComCcsds.commsBufferManager.bufferSendIn
+      radio.allocate      -> ComCcsds.commsBufferManager.bufferGetCallee
+      radio.deallocate    -> ComCcsds.commsBufferManager.bufferSendIn
       
-      # ComDriver <-> ComStub (Uplink)
-      comDriver.$recv                     -> ComCcsds.comStub.drvReceiveIn
-      ComCcsds.comStub.drvReceiveReturnOut -> comDriver.recvReturnIn
-      
-      # ComStub <-> ComDriver (Downlink)
-      ComCcsds.comStub.drvSendOut      -> comDriver.$send
-      comDriver.ready         -> ComCcsds.comStub.drvConnected
+      # Framer <-> ComStub (Downlink)
+      ComCcsds.framer.dataOut -> radio.dataIn
+      radio.dataReturnOut   -> ComCcsds.framer.dataReturnIn
+      radio.comStatusOut    -> ComCcsds.framer.comStatusIn
+
+      # ComStub <-> FrameAccumulator (Uplink)
+      radio.dataOut -> ComCcsds.frameAccumulator.dataIn
+      ComCcsds.frameAccumulator.dataReturnOut -> radio.dataReturnIn
     }
 
     connections RateGroups {
@@ -79,7 +82,6 @@ module ReferenceDeployment {
 
       # High rate (10Hz) rate group
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup10Hz] -> rateGroup10Hz.CycleIn
-      rateGroup10Hz.RateGroupMemberOut[0] -> comDriver.schedIn
 
       # Slow rate (1Hz) rate group
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1Hz] -> rateGroup1Hz.CycleIn

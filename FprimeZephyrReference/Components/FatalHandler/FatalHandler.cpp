@@ -14,6 +14,7 @@
 #include <FprimeZephyrReference/Components/FatalHandler/FatalHandler.hpp>
 #include <Fw/FPrimeBasicTypes.hpp>
 #include <zephyr/sys/reboot.h>
+#include <zephyr/kernel.h>
 
 namespace Components {
 
@@ -45,6 +46,7 @@ namespace Components {
         asm("bkpt #251");
       }
   #endif
+    k_sleep(K_MSEC(3000));
     // Otherwise, use Zephyr to reboot the system
     sys_reboot(SYS_REBOOT_COLD);
   }

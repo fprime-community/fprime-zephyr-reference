@@ -50,8 +50,6 @@ module ReferenceDeployment {
 
   instance rateGroupDriver: Svc.RateGroupDriver base id 0x10011000
 
-  instance version: Svc.Version base id 0x10012000
-
   instance timer: Zephyr.ZephyrRateDriver base id 0x10013000
 
   instance comDriver: Zephyr.ZephyrUartDriver base id 0x10014000

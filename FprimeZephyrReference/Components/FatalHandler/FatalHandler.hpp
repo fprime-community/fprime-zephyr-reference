@@ -53,7 +53,19 @@ namespace Components {
           const FwIndexType portNum, /*!< The port number*/
           FwEventIdType Id /*!< The ID of the FATAL event*/
       );
-    };
+
+    private:
+      // ----------------------------------------------------------------------
+      // Handler implementations for commands
+      // ----------------------------------------------------------------------
+
+      //! Handler implementation for command RESTART
+      //!
+      //! Issue a FSW reset
+      void RESTART_cmdHandler(FwOpcodeType opCode,  //!< The opcode
+                              U32 cmdSeq            //!< The command sequence number
+                              ) override;
+};
 
 } // end namespace Svc
 

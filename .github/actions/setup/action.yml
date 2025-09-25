@@ -1,0 +1,16 @@
+name: 'Zephyr Reference Setup'
+description: 'Set up Zephyr environment for Zephyr Reference CI'
+inputs:
+  stage: 
+    description: "Stage of the CI process"
+    required: false
+    default: "all"
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: "Set up Zephyr CI"
+      uses: ./lib/fprime-zephyr/.github/actions/setup
+      with:
+        workspace_directory: ./lib/zephyr-workspace
+        stage: ${{ inputs.stage }}

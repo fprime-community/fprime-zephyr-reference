@@ -53,9 +53,20 @@ namespace Components {
             const FwIndexType portNum,
             FwEventIdType Id) {
         Fw::Logger::log("FATAL %" PRI_FwEventIdType "handled.\n",Id);
-        Os::Task::delay(Fw::TimeInterval(0, 1000)); // Delay to allow log to be processed
+        Os::Task::delay(Fw::TimeInterval(0, 100000)); // Delay to allow log to be processed
         this->reboot(); // Reboot the system
     }
+
+// ----------------------------------------------------------------------
+// Handler implementations for commands
+// ----------------------------------------------------------------------
+
+void FatalHandler ::RESTART_cmdHandler(FwOpcodeType opCode, U32 cmdSeq) {
+    this->log_ACTIVITY_HI_Rebooting();
+    Os::Task::delay(Fw::TimeInterval(0, 100000)); // Delay to allow event to go out
+    this->reboot();
+    this->cmdResponse_out(opCode, cmdSeq, Fw::CmdResponse::OK);
+}
 
 
 } // end namespace Svc

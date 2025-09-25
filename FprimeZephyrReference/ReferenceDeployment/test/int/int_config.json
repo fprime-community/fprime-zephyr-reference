@@ -1,0 +1,18 @@
+{
+    "Svc.ActiveRateGroup": "ReferenceDeployment.rateGroup1Hz",
+    "Svc.ChronoTime": "ReferenceDeployment.chronoTime",
+    "Svc.RateGroupDriver": "ReferenceDeployment.rateGroupDriver",
+
+    "Svc.CommandDispatcher": "CdhCore.cmdDisp",
+    "Svc.EventManager": "CdhCore.events",
+    "Svc.PassiveTextLogger": "CdhCore.textLogger",
+    "Svc.TlmChan": "CdhCore.tlmSend",
+    "Svc.Health": "CdhCore.health",
+    "Svc.Version": "CdhCore.version",
+    
+    "Svc.AssertFatalAdapter": "CdhCore.fatalAdapter",
+    "Svc.FatalHandler": "CdhCore.fatalHandler",
+    
+    "Svc.ComQueue": "ComCcsds.comQueue",
+    "Svc.FrameAccumulator": "ComCcsds.frameAccumulator"
+}

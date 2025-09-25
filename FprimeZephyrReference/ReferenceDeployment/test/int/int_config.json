@@ -14,5 +14,5 @@
     "Svc.FatalHandler": "CdhCore.fatalHandler",
     
     "Svc.ComQueue": "ComCcsds.comQueue",
-    "Svc.FrameAccumulator": "ComCcsds.frameAccumulator",
+    "Svc.FrameAccumulator": "ComCcsds.frameAccumulator"
 }

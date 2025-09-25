@@ -20,7 +20,7 @@
     "Ref.SendBuff": "Ref.sendBuffComp",
     "Drv.TcpClient": "Ref.comDriver",
     "Svc.AssertFatalAdapter": "Ref.fatalAdapter",
-    "Svc.FatalHandler": "Ref.fatalHandler",
+    "Svc.FatalHandler": "CdhCore.fatalHandler",
     "Svc.BufferManager": "Ref.commsBufferManager",
     "Svc.PosixTime": "Ref.posixTime",
     "Svc.RateGroupDriver": "Ref.rateGroupDriverComp",

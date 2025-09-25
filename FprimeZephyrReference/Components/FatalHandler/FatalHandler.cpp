@@ -63,7 +63,7 @@ namespace Components {
 
 void FatalHandler ::RESTART_cmdHandler(FwOpcodeType opCode, U32 cmdSeq) {
     this->log_ACTIVITY_HI_Rebooting();
-    Os::Task::delay(Fw::TimeInterval(0, 1000)); // Delay to allow event to go out
+    Os::Task::delay(Fw::TimeInterval(0, 100000)); // Delay to allow event to go out
     this->reboot();
     this->cmdResponse_out(opCode, cmdSeq, Fw::CmdResponse::OK);
 }

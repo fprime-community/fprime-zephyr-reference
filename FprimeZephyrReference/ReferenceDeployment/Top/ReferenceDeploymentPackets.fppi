@@ -2,6 +2,7 @@ telemetry packets ReferenceDeploymentPackets {
 
   packet Health id 1 group 1 {
     CdhCore.cmdDisp.CommandsDispatched
+    CdhCore.cmdDisp.CommandsDropped
     ComCcsds.comQueue.comQueueDepth
     ComCcsds.commsBufferManager.HiBuffs
     ReferenceDeployment.rateGroup10Hz.RgMaxTime

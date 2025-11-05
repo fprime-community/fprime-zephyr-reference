@@ -6,7 +6,7 @@
 constant FW_CONSOLE_HANDLE_MAX_SIZE = 24
 
 @ Maximum size of a handle for Os::Task
-constant FW_TASK_HANDLE_MAX_SIZE = 160  # Only value that was changed from default
+constant FW_TASK_HANDLE_MAX_SIZE = 224  # modified from default
 
 @ Maximum size of a handle for Os::File
 constant FW_FILE_HANDLE_MAX_SIZE = 16
@@ -24,7 +24,7 @@ constant FW_DIRECTORY_HANDLE_MAX_SIZE = 16
 constant FW_FILESYSTEM_HANDLE_MAX_SIZE = 16
 
 @ Maximum size of a handle for Os::RawTime
-constant FW_RAW_TIME_HANDLE_MAX_SIZE = 56
+constant FW_RAW_TIME_HANDLE_MAX_SIZE = 32  # modified from default
 
 @ Maximum allowed serialization size for Os::RawTime objects
 constant FW_RAW_TIME_SERIALIZATION_MAX_SIZE = 8

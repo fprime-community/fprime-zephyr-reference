@@ -4,10 +4,6 @@
 ####
 
 cmake_minimum_required(VERSION 3.24.2)
-# Patch in std-atomic implementations
-if (BOARD STREQUAL "rpi_pico" OR FPRIME_ZEPHYR_USE_STD_ATOMIC_FIX)
-    include_directories(BEFORE "${CMAKE_CURRENT_LIST_DIR}/lib/fprime-zephyr/fprime-zephyr/Os/StdAtomic")
-endif()
 # Only enable Zephyr package when not testing. F Prime unit tests run on Linux typically.
 if (NOT BUILD_TESTING)
     find_package(Zephyr HINTS "${CMAKE_CURRENT_LIST_DIR}/lib/zephyr-workspace")

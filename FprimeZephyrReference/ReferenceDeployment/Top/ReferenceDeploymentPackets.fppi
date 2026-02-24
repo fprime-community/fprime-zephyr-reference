@@ -22,7 +22,8 @@ telemetry packets ReferenceDeploymentPackets {
     ComCcsds.commsBufferManager.TotalBuffs
     ComCcsds.commsBufferManager.CurrBuffs
     ComCcsds.comQueue.buffQueueDepth
-    CdhCore.tlmSend.SendLevel
+    CdhCore.tlmSend.GroupConfigs
+    CdhCore.tlmSend.SectionEnabled
   }
 
   packet Version id 4 group 3 {

@@ -8,14 +8,14 @@
 // Note: Uncomment when using Svc:TlmPacketizer
 //#include <FprimeZephyrReference/ReferenceDeployment/Top/ReferenceDeploymentPacketsAc.hpp>
 
-// Necessary project-specified types
-#include <Fw/Types/MallocAllocator.hpp>
+// Deployment-local allocator backed by Zephyr's system heap
+#include <FprimeZephyrReference/ReferenceDeployment/Top/ZephyrKmallocAllocator.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace ReferenceDeployment;
 
-// Instantiate a malloc allocator for cmdSeq buffer allocation
-Fw::MallocAllocator mallocator;
+// Instantiate a Zephyr-backed allocator for cmdSeq buffer allocation
+ReferenceDeployment::ZephyrKmallocAllocator mallocator;
 
 constexpr FwSizeType BASE_RATEGROUP_PERIOD_MS = 1; // 1Khz 
 

@@ -16,6 +16,7 @@ register_fprime_module(
         "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
     SOURCES
         "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+        "${CMAKE_CURRENT_LIST_DIR}/ZephyrKmallocAllocator.cpp"
     DEPENDS
         Fw_Logger
 )

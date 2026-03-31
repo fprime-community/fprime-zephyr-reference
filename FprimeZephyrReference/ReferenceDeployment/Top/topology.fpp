@@ -26,6 +26,7 @@ module ReferenceDeployment {
     instance rateGroupDriver
     instance timer
     instance comDriver
+    instance nullPrmDb
 
   # ----------------------------------------------------------------------
   # Pattern graph specifiers
@@ -37,6 +38,7 @@ module ReferenceDeployment {
     health connections instance CdhCore.$health
     time connections instance chronoTime
     telemetry connections instance CdhCore.tlmSend
+    param connections instance nullPrmDb
 
   # ----------------------------------------------------------------------
   # Telemetry packets (only used when TlmPacketizer is used)

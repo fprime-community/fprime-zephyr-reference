@@ -14,6 +14,7 @@
 #include <FprimeZephyrReference/Components/FatalHandler/FatalHandler.hpp>
 #include <Fw/FPrimeBasicTypes.hpp>
 #include <zephyr/sys/reboot.h>
+#include <cstring>  // for strncmp
 
 namespace Components {
 

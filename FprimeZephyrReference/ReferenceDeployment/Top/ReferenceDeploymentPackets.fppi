@@ -11,6 +11,7 @@ telemetry packets ReferenceDeploymentPackets {
 
   packet HealthWarnings id 2 group 1 {
     CdhCore.$health.PingLateWarnings
+    CdhCore.events.EventsDropped
     ComCcsds.commsBufferManager.NoBuffs
     ComCcsds.commsBufferManager.EmptyBuffs
     rateGroup10Hz.RgCycleSlips

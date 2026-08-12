@@ -5,6 +5,7 @@ module CdhCore{
        queue size CdhCoreConfig.QueueSizes.tlmSend \
        stack size CdhCoreConfig.StackSizes.tlmSend \
        priority CdhCoreConfig.Priorities.tlmSend \
+       cpu CdhCoreConfig.CpuAffinities.tlmSend \
     {
        
        # NOTE: The Name Ref is specific to the Reference deployment, Ref

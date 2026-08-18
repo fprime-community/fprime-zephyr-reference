@@ -9,7 +9,7 @@ module ReferenceDeployment {
     rateGroup1Hz
   }
 
-  topology ReferenceDeployment {
+  deployment topology ReferenceDeployment {
 
   # ----------------------------------------------------------------------
   # Subtopology imports

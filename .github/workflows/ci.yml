@@ -82,8 +82,10 @@ jobs:
           else
             echo "No nasa/fprime-gds pr-${PR_NUMBER} branch (HTTP ${code}); keeping the pinned version"
           fi
-      - name: "Install CI tooling"
-        run: pip install git+https://github.com/fprime-community/fprime-ci@devel
+      - name: "Install project requirements and CI tooling"
+        run: |
+          pip install -r requirements.txt
+          pip install git+https://github.com/fprime-community/fprime-ci@devel
         shell: bash
       - name: "Set up Zephyr"
         uses: ./.github/actions/setup

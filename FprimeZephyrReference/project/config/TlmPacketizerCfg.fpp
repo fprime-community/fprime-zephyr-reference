@@ -11,10 +11,10 @@ module Svc {
         NUM_SECTIONS,     @< REQUIRED: Counter, leave as last element.
     }
 
-    @ Greatest packet group
     @ Maximum number of packets the packetizer can be configured with (sizes FPP array types)
     constant MAX_PACKETIZER_PACKETS = 5
 
+    @ Greatest packet group
     constant MAX_CONFIGURABLE_TLMPACKETIZER_GROUP = 3
 
     constant NUM_CONFIGURABLE_TLMPACKETIZER_GROUPS = MAX_CONFIGURABLE_TLMPACKETIZER_GROUP + 1

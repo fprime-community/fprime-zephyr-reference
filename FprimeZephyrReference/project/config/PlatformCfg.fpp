@@ -9,7 +9,8 @@ constant FW_CONSOLE_HANDLE_MAX_SIZE = 24
 constant FW_TASK_HANDLE_MAX_SIZE = 224  # modified from default
 
 @ Maximum size of a handle for Os::File
-constant FW_FILE_HANDLE_MAX_SIZE = 16
+@ Pointer-handle implementations need 24 once the open mode lives on FileInterface (nasa/fprime#6318).
+constant FW_FILE_HANDLE_MAX_SIZE = 24
 
 @ Maximum size of a handle for Os::Mutex
 constant FW_MUTEX_HANDLE_MAX_SIZE = 72
@@ -18,7 +19,8 @@ constant FW_MUTEX_HANDLE_MAX_SIZE = 72
 constant FW_QUEUE_HANDLE_MAX_SIZE = 352
 
 @ Maximum size of a handle for Os::Directory
-constant FW_DIRECTORY_HANDLE_MAX_SIZE = 16
+@ 32 once the open flag lives on DirectoryInterface (nasa/fprime#6318), matching the F Prime default.
+constant FW_DIRECTORY_HANDLE_MAX_SIZE = 32
 
 @ Maximum size of a handle for Os::FileSystem
 constant FW_FILESYSTEM_HANDLE_MAX_SIZE = 16

@@ -37,6 +37,15 @@ telemetry packets ReferenceDeploymentPackets {
     CdhCore.version.LibraryVersion01
   }
 
+  packet ComDriver id 5 group 2 {
+    comDriver.RxBytes
+    comDriver.RxOverrunCount
+    comDriver.RxBackpressureCount
+    comDriver.RxAllocFailCount
+    comDriver.TxBytes
+    comDriver.TxDropCount
+  }
+
 
 } omit {
   CdhCore.cmdDisp.CommandErrors

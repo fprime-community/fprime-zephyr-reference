@@ -74,6 +74,9 @@ void setupTopology(const TopologyState& state) {
     
     // Uplink is configured for receive so a socket task is started
     comDriver.configure(state.uartDevice, state.baudRate);
+    // A host touching the same port at the board's bootloader baud rate (134 Teensy, 1200 RP2) reboots into the
+    // bootloader so CI can flash without a button press. Logs and leaves the touch disabled on failure.
+    (void)touchReset.configure(state.uartDevice);
 }
 
 void startRateGroups() {

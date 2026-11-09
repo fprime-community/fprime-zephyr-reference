@@ -27,6 +27,7 @@ module ReferenceDeployment {
     instance timer
     instance comDriver
     instance nullPrmDb
+    instance touchReset
 
   # ----------------------------------------------------------------------
   # Pattern graph specifiers

@@ -56,4 +56,6 @@ module ReferenceDeployment {
   
   instance nullPrmDb: Components.NullPrmDb base id 0x10015000
 
+  instance touchReset: Zephyr.ZephyrTouchReset base id 0x10016000
+
 }

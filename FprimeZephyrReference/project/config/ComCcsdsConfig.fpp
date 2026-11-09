@@ -52,7 +52,7 @@ module ComCcsdsConfig {
         constant commsBuffSize         = 2048
         constant commsFileBuffSize     = 1
         constant commsBuffCount        = 5
-        constant commsFileBuffCount    = 1
+        constant commsFileBuffCount    = 0
         constant commsBuffMgrId        = 200
     }
 }
